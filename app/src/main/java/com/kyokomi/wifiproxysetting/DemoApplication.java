@@ -54,7 +54,7 @@ public class DemoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        component = Dagger_DemoApplication$ApplicationComponent.builder()
+        component = Dagger_DemoApplication_ApplicationComponent.builder()
                 .androidModule(new AndroidModule(this))
                 .build();
         component().inject(this); // As of now, LocationManager should be injected into this.
