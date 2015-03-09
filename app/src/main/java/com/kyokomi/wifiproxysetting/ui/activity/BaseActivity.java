@@ -18,13 +18,13 @@ package com.kyokomi.wifiproxysetting.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-import com.kyokomi.wifiproxysetting.DemoApplication;
+import com.kyokomi.wifiproxysetting.WifiProxySettingApplication;
 
-public abstract class DemoActivity extends ActionBarActivity {
+public abstract class BaseActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Perform injection so that when this call returns all dependencies will be available for use.
-        ((DemoApplication) getApplication()).component().inject(this);
+        ((WifiProxySettingApplication) getApplication()).component().inject(this);
     }
 }

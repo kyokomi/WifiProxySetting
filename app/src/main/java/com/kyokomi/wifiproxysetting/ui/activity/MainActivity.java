@@ -1,25 +1,19 @@
 package com.kyokomi.wifiproxysetting.ui.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.kyokomi.wifiproxysetting.DemoApplication;
+import com.kyokomi.wifiproxysetting.WifiProxySettingApplication;
 import com.kyokomi.wifiproxysetting.ui.fragment.PlaceholderFragment;
 import com.kyokomi.wifiproxysetting.R;
 
-import javax.inject.Inject;
-
-public class MainActivity extends DemoActivity {
-
-    @Inject
-    SharedPreferences sharedPreferences;
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((DemoApplication) getApplication()).component().inject(this);
+        ((WifiProxySettingApplication) getApplication()).component().inject(this);
 
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
@@ -32,8 +26,9 @@ public class MainActivity extends DemoActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+        return false;
     }
 
     @Override

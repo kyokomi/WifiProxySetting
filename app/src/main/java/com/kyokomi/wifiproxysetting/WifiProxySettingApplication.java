@@ -20,8 +20,8 @@ import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 
 import com.google.gson.Gson;
-import com.kyokomi.wifiproxysetting.ui.activity.DemoActivity;
-import com.kyokomi.wifiproxysetting.ui.fragment.DemoFragment;
+import com.kyokomi.wifiproxysetting.ui.activity.BaseActivity;
+import com.kyokomi.wifiproxysetting.ui.fragment.BaseFragment;
 import com.kyokomi.wifiproxysetting.ui.fragment.PlaceholderFragment;
 
 import javax.inject.Inject;
@@ -29,16 +29,16 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
-public class DemoApplication extends Application {
+public class WifiProxySettingApplication extends Application {
     @Singleton
     @Component(modules = AndroidModule.class)
     public interface ApplicationComponent {
-        void inject(DemoApplication application);
+        void inject(WifiProxySettingApplication application);
 
-        void inject(DemoActivity demoActivity);
+        void inject(BaseActivity baseActivity);
 
         void inject(com.kyokomi.wifiproxysetting.ui.activity.MainActivity mainActivity);
-        void inject(DemoFragment demoFragment);
+        void inject(BaseFragment baseFragment);
         void inject(PlaceholderFragment placeholderFragment);
     }
 
@@ -54,7 +54,7 @@ public class DemoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        component = Dagger_DemoApplication_ApplicationComponent.builder()
+        component = Dagger_WifiProxySettingApplication_ApplicationComponent.builder()
                 .androidModule(new AndroidModule(this))
                 .build();
         component().inject(this); // As of now, LocationManager should be injected into this.

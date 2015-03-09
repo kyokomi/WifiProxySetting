@@ -19,8 +19,8 @@ import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.gson.Gson;
-import com.kyokomi.wifiproxysetting.DemoApplication;
 import com.kyokomi.wifiproxysetting.R;
+import com.kyokomi.wifiproxysetting.WifiProxySettingApplication;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ import butterknife.OnItemClick;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends DemoFragment {
+public class PlaceholderFragment extends BaseFragment {
 
     @Inject
     SharedPreferences sharedPreferences;
@@ -58,7 +58,7 @@ public class PlaceholderFragment extends DemoFragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        ((DemoApplication) getActivity().getApplication()).component().inject(this);
+        ((WifiProxySettingApplication) getActivity().getApplication()).component().inject(this);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.inject(this, rootView);

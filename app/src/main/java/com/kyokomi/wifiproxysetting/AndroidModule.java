@@ -17,7 +17,6 @@ package com.kyokomi.wifiproxysetting;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
 
@@ -28,17 +27,15 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-import static android.content.Context.LOCATION_SERVICE;
-
 /**
  * A module for Android-specific dependencies which require a {@link android.content.Context} or
  * {@link android.app.Application} to create.
  */
 @Module
 public class AndroidModule {
-    private final DemoApplication application;
+    private final WifiProxySettingApplication application;
 
-    public AndroidModule(DemoApplication application) {
+    public AndroidModule(WifiProxySettingApplication application) {
         this.application = application;
     }
 
