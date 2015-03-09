@@ -7,7 +7,6 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,9 +71,10 @@ public class PlaceholderFragment extends BaseFragment {
     public void showWifiConfigDetail(int position) {
         final String ssid = (String) mListView.getAdapter().getItem(position);
 
-        // WIFI 強制ON
+        // WIFI on
         if (!wifiManager.isWifiEnabled()) {
-            wifiManager.setWifiEnabled(true);
+            showWifiOffAlertDialog();
+            return;
         }
 
         // 選択したSSIDの設定を取得
@@ -93,31 +93,26 @@ public class PlaceholderFragment extends BaseFragment {
 
         // 永続化用にJSON文字列に変換
         final String wifiConfig = gson.toJson(wifiConfigurationOptional.get());
-        Log.d(ssid, wifiConfig);
 
         // 設定確認のダイアログを表示
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this.getActivity());
-        // TODO: 固定文言
-        alertBuilder.setTitle("Wifi設定確認");
+        alertBuilder.setTitle(this.getString(R.string.dialog_title));
         alertBuilder.setMessage(wifiConfig);
-        alertBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+        alertBuilder.setPositiveButton(this.getString(R.string.button_save), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (sharedPreferences.contains(ssid)) {
-                    String settingJson = sharedPreferences.getString(ssid, null);
-                    Log.d("Preferences : " + ssid, settingJson);
-                } else {
+                if (!sharedPreferences.contains(ssid)) {
                     sharedPreferences.edit().putString(ssid, wifiConfig).apply();
                 }
             }
         });
+
         // Saveがある場合loadボタンを出す
         if (sharedPreferences.contains(ssid)) {
-            alertBuilder.setNeutralButton("Load", new DialogInterface.OnClickListener() {
+            alertBuilder.setNeutralButton(this.getString(R.string.button_load), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String settingJson = sharedPreferences.getString(ssid, null);
-                    Log.d("Preferences : " + ssid, settingJson);
                     // 更新
                     WifiConfiguration wifiConfiguration = gson.fromJson(settingJson,
                             WifiConfiguration.class);
@@ -125,12 +120,13 @@ public class PlaceholderFragment extends BaseFragment {
                 }
             });
         }
-        alertBuilder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+
+        alertBuilder.setNegativeButton(this.getString(R.string.button_close), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // なんもしない
             }
         });
+
         // アラートダイアログのキャンセルが可能
         alertBuilder.setCancelable(true);
         AlertDialog alertDialog = alertBuilder.create();
@@ -142,7 +138,8 @@ public class PlaceholderFragment extends BaseFragment {
     public void showConfiguredNetworks() {
         // WIFI on
         if (!wifiManager.isWifiEnabled()) {
-            wifiManager.setWifiEnabled(true);
+            showWifiOffAlertDialog();
+            return;
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
@@ -158,7 +155,8 @@ public class PlaceholderFragment extends BaseFragment {
     public void showScanResults() {
         // WIFI on
         if (!wifiManager.isWifiEnabled()) {
-            wifiManager.setWifiEnabled(true);
+            showWifiOffAlertDialog();
+            return;
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
@@ -168,5 +166,17 @@ public class PlaceholderFragment extends BaseFragment {
             adapter.add(scanResult.SSID);
         }
         mListView.setAdapter(adapter);
+    }
+
+    private void showWifiOffAlertDialog() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this.getActivity());
+        alertBuilder.setTitle(this.getString(R.string.wifi_alert_dialog_title));
+        alertBuilder.setMessage(this.getString(R.string.wifi_alert_dialog_message));
+        alertBuilder.setPositiveButton(this.getString(R.string.button_close), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alertBuilder.show();
     }
 }

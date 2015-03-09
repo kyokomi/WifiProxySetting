@@ -14,23 +14,17 @@
         android:id="@+id/header"
         android:layout_margin="8dp">
 
-        <TextView
-            android:text="@string/hello_world"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:id="@+id/textView" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Config"
+            android:text="History WiFi"
             android:layout_margin="4dp"
             android:id="@+id/button1" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scan"
+            android:text="Scan WiFi"
             android:layout_margin="4dp"
             android:id="@+id/button2" />
 
