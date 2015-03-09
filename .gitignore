@@ -33,4 +33,6 @@ proguard/
 # Log Files
 *.log
 
+# keystore
+app/keystores/release.keystore.properties
 

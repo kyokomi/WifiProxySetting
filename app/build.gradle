@@ -1,9 +1,24 @@
+// keystoreの署名情報
+def keyStoreProperties = new Properties()
+file("keystores/release.keystore.properties").withInputStream {
+    stream -> keyStoreProperties.load(stream)
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
+
+    signingConfigs {
+        release {
+            storeFile file(keyStoreProperties.storeFile)
+            storePassword keyStoreProperties.storePassword
+            keyAlias keyStoreProperties.keyAlias
+            keyPassword keyStoreProperties.keyPassword
+        }
+    }
 
     defaultConfig {
         applicationId "com.kyokomi.wifiproxysetting"
@@ -16,6 +31,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
